@@ -1,6 +1,7 @@
 import os
 from typing import Any
 from . import init
+from . import config as cfg
 def do(command: str, config: dict, args: Any):
     """Execute the given command
 
@@ -10,3 +11,5 @@ def do(command: str, config: dict, args: Any):
     match command:
         case 'init':
             init.init(config)
+        case 'config':
+            cfg.config(os.environ['EDITOR'], config)
