@@ -1,6 +1,7 @@
 import os
 from typing import Any
 from . import init
+from . import build
 from . import config as cfg
 from . import unravel
 def do(command: str, config: dict, args: Any):
@@ -16,3 +17,5 @@ def do(command: str, config: dict, args: Any):
             unravel.unravel(args.file, config)
         case 'config':
             cfg.config(os.environ['EDITOR'], config)
+        case 'build':
+            build.build(config)
