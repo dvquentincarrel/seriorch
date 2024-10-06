@@ -1,0 +1,27 @@
+db: ''
+prefix: ''
+name: ''
+icon: ''
+sequence: 0
+main_view: ''
+init_oc: ''
+help: ''
+other_onchanges:
+    - ''
+other_views:
+    - ''
+other_styles:
+    - ''
+onchanges:
+  - id: ''
+views:
+  - id: ''
+styles:
+  - id: ''
+labels:
+  - id: ''
+    value: ''
+params:
+  - id: ''
+    value: ''
+    note: ''
