@@ -152,3 +152,14 @@ class View(record.Record):
             f"""""",
         ]))
 
+    def inject(self, cursor: Any) -> None:
+        """Injects view's architecture in the DB. Does not commit
+
+        :param cursor: Database cursor
+        """
+        arch = self.arch.replace("'", "''")
+        cursor.execute(f"""
+            UPDATE ir_ui_view_ionic
+            SET {'raw_' if self.raw else ''}architecture = '{arch}'
+            WHERE identifier = '{self.identifier}'
+        """)

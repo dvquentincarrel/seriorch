@@ -136,3 +136,15 @@ class Onchange(record.Record):
             f"""    </record>""",
             f"""""",
         ]))
+
+    def inject(self, cursor: Any) -> None:
+        """Injects onchange's architecture in the DB. Does not commit
+
+        :param cursor: Database cursor
+        """
+        code = self.code.replace("'", "''")
+        cursor.execute(f"""
+            UPDATE manual_onchange
+            SET {'raw_' if self.raw else ''}code = '{code}'
+            WHERE name = '{self.name}'
+        """)

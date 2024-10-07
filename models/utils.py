@@ -1,5 +1,6 @@
 import os
 from typing import Any
+from psycopg2.extensions import connection
 import yaml
 import models
 from .onchange import Onchange
@@ -8,6 +9,7 @@ from .style import Style
 from .label import Label
 from .param import Param
 from .scenario import Scenario
+import psycopg2 as pcg
 
 
 def make_skeleton(
@@ -81,3 +83,19 @@ def __recompose(model: Any, data: dict[str, Any], prefix: str) -> list[Any]:
         return []
     func = getattr(model, 'from_dict')
     return [func(datum, prefix) for datum in data]
+
+
+def get_db_cursor(config: dict[str, Any]) -> pcg.extensions.cursor:
+    """Produces the cursor to connect to the configured DB
+
+    :param config: serior configuration
+    :return: Cursor to the DB
+    """
+    # TODO: test
+    with open('skeleton.yaml', 'r') as file:
+        data = yaml.full_load(file)
+
+    if 'db' not in data:
+        raise ValueError("Le squelette n'a pas d'entrée \"db\", qui doit contenir le nom de la bdd.")
+
+    return pcg.connect(database=data['db'], user=config['db_user'], password=config['db_pw'], port=config['db_port']).cursor()

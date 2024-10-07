@@ -77,3 +77,16 @@ class Param(record.Record):
             f"""    </record>""",
             f"""""",
         ]))
+
+    def inject(self, cursor: Any) -> None:
+        """Injects param's value in the DB. Does not commit
+        TODO: Filter on xml id. It would overwrite ALL params with this name
+
+        :param cursor: Database cursor
+        """
+        value = self.value.replace("'", "''")
+        cursor.execute(f"""
+            UPDATE ir_ui_menu_ionic_param
+            SET value = '{value}'
+            WHERE name = '{self.name}'
+        """)

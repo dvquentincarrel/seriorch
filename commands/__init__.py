@@ -3,6 +3,7 @@ from typing import Any
 from . import init
 from . import build
 from . import config as cfg
+from . import inject
 from . import unravel
 def do(command: str, config: dict, args: Any):
     """Execute the given command
@@ -19,3 +20,5 @@ def do(command: str, config: dict, args: Any):
             cfg.config(os.environ['EDITOR'], config)
         case 'build':
             build.build(config)
+        case 'inject':
+            inject.inject(config)

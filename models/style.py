@@ -87,3 +87,16 @@ class Style(record.Record):
             f"""    </record>""",
             f"""""",
         ]))
+
+
+    def inject(self, cursor: Any) -> None:
+        """Injects css's architecture in the DB. Does not commit
+
+        :param cursor: Database cursor
+        """
+        style = self.style.replace("'", "''")
+        cursor.execute(f"""
+            UPDATE ir_ui_css_ionic
+            SET stylr = '{style}'
+            WHERE name = '{self.name}'
+        """)
