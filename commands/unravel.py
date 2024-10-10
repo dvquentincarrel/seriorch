@@ -77,7 +77,7 @@ def _parse_file(path: str) -> dict[str, dict[str, Record]]:
 
     views_dict = {}
     for view in views:
-        _ = models.View.from_xml(view)
+        _ = models.View.from_xml(view, path)
         views_dict[_.xml_id] = _
 
     labels_dict = {}

@@ -1,7 +1,10 @@
 from . import record
 from typing import Any, TYPE_CHECKING
+import re
 import lxml.etree as etree
 from collections.abc import Iterable
+
+RE_ARCH = re.compile(r'(<data>.*</data>)', flags=re.DOTALL)
 
 class View(record.Record):
 
@@ -57,7 +60,7 @@ class View(record.Record):
         return view
 
     @classmethod
-    def from_xml(cls, node: Any) -> "View":
+    def from_xml(cls, node: Any, filename: str) -> "View":
         """Reconstructs a record from an xml node, guessing as many values as
         possible"""
         view = cls()
@@ -83,7 +86,7 @@ class View(record.Record):
             if tmp is None:
                 raise ValueError(f'{err_msg} "architecture" ou "raw_architecture"')
             view.raw = False
-        view.arch = etree.tostring(tmp.find('data'), encoding="unicode")
+        view.arch = cls.__get_arch_content(tmp, filename)
 
         tmp = node.find('field[@name="is_deprecated"]')
         if tmp is None:
@@ -163,3 +166,27 @@ class View(record.Record):
             SET {'raw_' if self.raw else ''}architecture = '{arch}'
             WHERE identifier = '{self.identifier}'
         """)
+
+    @classmethod
+    def __get_arch_content(cls, node: Any, filename: str) -> str:
+        """Attempts to extracts the content of the architecture field, without
+        having the xml canonicalization mess it up
+
+        :param node: Node of the architecture field
+        :param filename: Name/path of the xml file
+        :return: The content of the architecture field
+        """
+        starting_line = node.sourceline
+        # You never know when someone's gonna decide that putting a view
+        # as the last thing in the file is a viable choice
+        if node.getparent().getnext() is not None:
+            next_elem_starting_line = node.getparent().getnext().sourceline
+        else:
+            next_elem_starting_line = 999999
+
+        with open(filename, 'r') as file:
+            lines = file.readlines()[starting_line:next_elem_starting_line]
+
+        content = ''.join(lines)
+
+        return RE_ARCH.findall(content)[0].strip()
