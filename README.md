@@ -1,5 +1,7 @@
-# Le nom
-ScEnaRIO ORCHestrator. Voilà.
+# Installation
+Se mettre à la racine du repo, lancer `install.bash`.
+
+Par la suite, le programme est disponible avec le nom `serior`.
 
 # Workflow
 - Démarrer un project avec `serior init`, ou `serior unravel FICHIER` si reprise d'un scénario existant
@@ -7,3 +9,6 @@ ScEnaRIO ORCHestrator. Voilà.
 - Continuer le développement, utiliser `serior inject` pour mettre à jour les records en bdd sans mettre à jour le module
 - Faire un dernier `serior build`, s'assurer que le scénario passe la màj
 - Commit le scénario
+
+# Le nom
+ScEnaRIO ORCHestrator. Voilà.
