@@ -7,11 +7,11 @@ def build(config: dict) -> None:
     """Create the final xml file, move or copy it to the destination"""
     data_template = '\n'.join([
         '<?xml version="1.0" encoding="utf-8"?>',
-        "<openerp>",
+        f"<{config['surrounding_tag']}>",
         "<data>",
         "{}",
         "</data>",
-        "</openerp>",
+        f"</{config['surrounding_tag']}>",
     ])
     scen, onchanges, views, styles, labels, params = utils.rebuild_models('skeleton.yaml')
     make_xml = lambda x: [y.to_xml() for y in x]

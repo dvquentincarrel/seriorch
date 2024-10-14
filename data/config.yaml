@@ -1,5 +1,6 @@
 db_pw: openprod
 db_user: openprod
+surrounding_tag: openprod
 db_port: 5416
 keep_build: true # Copie le fichier de build au lieu de le déplacer
 build_name: data.xml # Nom du fichier de build en local
