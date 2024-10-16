@@ -98,16 +98,25 @@ class Scenario(record.Record):
 
         # Aggregate external & here-defined records
         menu.styles = dict_.get('other_styles', [])
+        styles = dict_.get('styles', [])
         menu.styles.extend(
-            [f"{menu.xml_id}_{style['id']}" for style in dict_.get('styles', [])])
+            [f"{menu.xml_id}_{style['id']}" for style in styles if not style.get('quirky')])
+        menu.styles.extend(
+            [style['id'] for style in styles if style.get('quirky')])
 
         menu.onchanges = dict_.get('other_onchanges', [])
+        onchanges: list[dict[str, Any]] = dict_.get('onchanges', [])
         menu.onchanges.extend(
-            [f"{menu.xml_id}_{onchange['id']}" for onchange in dict_.get('onchanges', [])])
+            [onchange['id'] for onchange in onchanges if onchange.get('quirky')])
+        menu.onchanges.extend(
+            [f"{menu.xml_id}_{onchange['id']}" for onchange in onchanges if not onchange.get('quirky')])
 
         menu.views = dict_.get('other_views', [])
+        views = dict_.get('views', [])
         menu.views.extend(
-            [f"{menu.xml_id}_{view['id']}" for view in dict_.get('views', [])])
+            [f"{menu.xml_id}_{view['id']}" for view in views if not view.get('quirky')])
+        menu.views.extend(
+            [view['id'] for view in views if view.get('quirky')])
 
         return menu
 
