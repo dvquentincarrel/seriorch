@@ -16,12 +16,20 @@ def unravel(data_file: str, config: dict) -> None:
     - populates the skeleton
     - updates the destination location
 
-    :param data_file: File to decompose
+    :param data_file: Path to file to decompose
     :param confing: Global config. Used to test for auto-commit on unraveling
     """
     records: dict[str, list[models.Record]]
     # Also creates records files
     records = {key:list(val.values()) for key, val in _parse_file(data_file).items()}
+    if records['menu'][0].xml_id not in data_file:
+        file_suffix = (os.path.basename(data_file)
+                       .split('data')[-1]
+                       .split('.xml')[0]
+                       .partition('_')[-1]
+                       )
+        records['menu'][0].file_name = file_suffix
+
 
     if not os.path.exists('skeleton.yaml'):
         init(config)

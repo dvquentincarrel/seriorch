@@ -5,7 +5,6 @@ Does NOT handle the case of modifications of external scenarios
 
 from . import record
 from typing import Any, TYPE_CHECKING, Optional
-from collections.abc import Iterable
 
 class Scenario(record.Record):
     no_cache: Optional[bool] = None
@@ -15,6 +14,7 @@ class Scenario(record.Record):
     init_oc: Optional[str] = None
     if TYPE_CHECKING:
         xml_id: str
+        file_name: str # Allow handling of cases where xml_id doesn't reflect data file name
         name: str
         icon: str
         seq: str
@@ -83,6 +83,7 @@ class Scenario(record.Record):
         """
         menu = cls()
         menu.xml_id = dict_['prefix']
+        menu.file_name = dict_.get('file_name', menu.xml_id)
         menu.name = dict_['name']
         menu.icon = dict_['icon']
         menu.seq = dict_['sequence']

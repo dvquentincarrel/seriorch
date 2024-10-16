@@ -32,4 +32,4 @@ def build(config: dict) -> None:
         callback = shutil.copy2
     else:
         callback = shutil.move
-    callback(config['build_name'], f'location/data_{scen.xml_id}.xml')
+    callback(config['build_name'], f'location/data_{scen.file_name}.xml')
