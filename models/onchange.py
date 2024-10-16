@@ -7,7 +7,7 @@ class Onchange(record.Record):
     deprecated: bool = False
     raw: bool = True
     secure: bool = True
-    trans = None
+    translatable = None
     model_id: str = 'manual.onchange'
     if TYPE_CHECKING:
         code: str
@@ -40,7 +40,7 @@ class Onchange(record.Record):
         onchange.deprecated = dict_.get('deprecated', cls.deprecated)
         onchange.raw = dict_.get('raw', cls.raw)
         onchange.secure = dict_.get('secure', cls.secure)
-        onchange.trans = dict_.get('translatable', cls.trans)
+        onchange.translatable = dict_.get('translatable', cls.translatable)
         onchange.model_id = dict_.get('model_id', cls.model_id)
 
         prefix = f"{prefix}_" if not dict_.get('quirky') else ''
@@ -92,13 +92,13 @@ class Onchange(record.Record):
 
         tmp = node.find('field[@name="is_translatable_code"]')
         if tmp is None:
-            onchange.trans = cls.trans
+            onchange.translatable = cls.translatable
         else:
             intermediate = eval(tmp.get('eval'))
             if intermediate is not None:
-                onchange.trans = bool(intermediate)
+                onchange.translatable = bool(intermediate)
             else:
-                onchange.trans = None
+                onchange.translatable = None
 
         # Évalue le domaine de recherche pour obtenir le nom du modèle
         tmp = node.find('field[@name="model_id"]')
@@ -127,9 +127,9 @@ class Onchange(record.Record):
             f"""    <record id="{self.xml_id}" model="manual.onchange">""",
             f"""        <field name="name">{self.name}</field>""",
             f"""        <field name="model_id" search="[('model', '=', '{self.model_id}')]"/>""",
-            f"""        <field name="is_translatable_code" eval="{not self.trans}"/>""" if self.trans is not None else None,
             f"""        <field name="is_security_check" eval="{self.secure}"/>""" if not self.secure else None,
             f"""        <field name="is_deprecated" eval="{self.deprecated}"/>""" if self.deprecated else None,
+            f"""        <field name="is_translatable_code" eval="{self.translatable}"/>""" if self.translatable is not None else None,
             f"""        <field name="{'raw_' * self.raw}code"><![CDATA[""",
             f"""{self.code.strip()}""",
             f"""        ]]></field>""",

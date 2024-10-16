@@ -11,7 +11,7 @@ class View(record.Record):
     deprecated: bool = False
     raw: bool = True
     secure: bool = True
-    trans: None | bool = None
+    translatable: None | bool = None
     model_id: str = 'ir.ui.view.ionic'
     inherit: str = ''
     name: str = 'Accueil'
@@ -46,7 +46,7 @@ class View(record.Record):
         view.deprecated = dict_.get('deprecated', cls.deprecated)
         view.raw = dict_.get('raw', cls.raw)
         view.secure = dict_.get('secure', cls.secure)
-        view.trans = dict_.get('translatable', cls.trans)
+        view.translatable = dict_.get('translatable', cls.translatable)
         view.model_id = dict_.get('model_id', cls.model_id)
         view.inherit = dict_.get('inherit', cls.inherit)
         view.name = dict_.get('name', cls.name)
@@ -125,13 +125,13 @@ class View(record.Record):
 
         tmp = node.find('field[@name="is_translatable_architecture"]')
         if tmp is None:
-            view.trans = cls.trans
+            view.translatable = cls.translatable
         else:
             intermediate = eval(tmp.get('eval'))
             if intermediate is not None:
-                view.trans = bool(intermediate)
+                view.translatable = bool(intermediate)
             else:
-                view.trans = None
+                view.translatable = None
 
         return view
 
@@ -145,7 +145,7 @@ class View(record.Record):
             f"""        <field name="name">{self.name}</field>""",
             f"""        <field name="inherited_view_id" ref="{self.inherit}"/>""" if self.inherit else None,
             f"""        <field name="model_id" search="[('model', '=', '{self.model_id}')]"/>""",
-            f"""        <field name="is_translatable_architecture" eval="{not self.trans}"/>""" if self.trans is not None else None,
+            f"""        <field name="is_translatable_architecture" eval="{self.translatable}"/>""" if self.translatable is not None else None,
             f"""        <field name="is_security_check" eval="{self.secure}"/>""" if not self.secure else None,
             f"""        <field name="is_deprecated" eval="{self.deprecated}"/>""" if self.deprecated else None,
             f"""        <field name="{'raw_' * self.raw}architecture" type="xml">""",
