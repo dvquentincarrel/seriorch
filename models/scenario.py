@@ -11,7 +11,7 @@ class Scenario(record.Record):
     deprecated: Optional[bool] = None
     parent: Optional[str] = None
     help: Optional[str] = None
-    init_oc: Optional[str] = None
+    init_oc: str = ''
     if TYPE_CHECKING:
         xml_id: str
         file_name: str # Allow handling of cases where xml_id doesn't reflect data file name
@@ -94,7 +94,7 @@ class Scenario(record.Record):
         elif dict_.get('init_oc'):
             menu.init_oc = f"{menu.xml_id}_{dict_['init_oc']}"
         else:
-            menu.init_oc = None
+            menu.init_oc = cls.init_oc
 
 
         menu.no_cache = dict_.get('no_cache')
