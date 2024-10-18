@@ -89,7 +89,13 @@ class Scenario(record.Record):
         menu.seq = dict_['sequence']
         # Quirky versions either come from outside or were badly named
         menu.main_view = dict_.get('quirky_main_view') or f"{menu.xml_id}_{dict_['main_view']}"
-        menu.init_oc = dict_.get('quirky_init_oc') or f"{menu.xml_id}_{dict_['init_oc']}"
+        if dict_.get('quirky_init_oc'):
+            menu.init_oc = dict_['quirky_init_oc']
+        elif dict_.get('init_oc'):
+            menu.init_oc = f"{menu.xml_id}_{dict_['init_oc']}"
+        else:
+            menu.init_oc = None
+
 
         menu.no_cache = dict_.get('no_cache')
         menu.deprecated = dict_.get('deprecated')
@@ -219,7 +225,7 @@ class Scenario(record.Record):
             f"""        <field name="is_always_new" eval="{self.no_cache}"/>""" if self.no_cache is not None else None,
             f"""        <field name="sequence" eval="{self.seq}"/>""",
             f"""        <field name="view_id" ref="{self.main_view}"/>""",
-            f"""        <field name="initial_onchange_id" ref="{self.init_oc}"/>""",
+            f"""        <field name="initial_onchange_id" ref="{self.init_oc}"/>""" if self.init_oc else None,
             f"""        <field name="view_ids" eval="[(6, 0, [{record.make_refs(self.views)}])]"/>""" if self.views else None,
             f"""        <field name="css_ids" eval="[(6, 0, [{record.make_refs(self.styles)}])]"/>""" if self.styles else None,
             f"""        <field name="onchange_ids" eval="[(6, 0, [{record.make_refs(self.onchanges)}])]"/>""" if self.onchanges else None,
