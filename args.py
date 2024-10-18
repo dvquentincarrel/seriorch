@@ -4,9 +4,10 @@ from colors import *
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
-    description="Découpe et assemble des fichiers de data pour les web scanners"
+    description="Découpe et assemble des fichiers de data pour les web scanners",
+    prog="serior"
 )
-parser.add_argument('-v', '--version', action='version', version='seriorch 1.1')
+parser.add_argument('-v', '--version', action='version', version='seriorch 1.2')
 subparsers = parser.add_subparsers(dest="command", title="Commandes", help="commandes")
 
 init_parser = subparsers.add_parser('init', help="Initialise un projet")

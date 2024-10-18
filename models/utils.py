@@ -12,6 +12,28 @@ from .scenario import Scenario
 import psycopg2 as pcg
 
 
+def reoarder_skeleton(skeleton: dict[str, Any]) -> dict:
+    """Creates a skeleton with reordered keys, for ergonomy"""
+    first_keys = [
+        'db', 'file_name', 'prefix', 'name', 'deprecated', 'icon',
+        'sequence', 'main_view', 'quirky_main_view', 'init_oc',
+        'quirky_init_oc'
+    ]
+    last_keys = ['help']
+    ordered_skeleton: dict[str, Any] = {}
+    for key in first_keys:
+        if key in skeleton:
+            ordered_skeleton[key] = skeleton[key]
+    for val_key in skeleton.keys():
+        if val_key not in first_keys + last_keys:
+            ordered_skeleton[val_key] = skeleton[val_key]
+    for key in last_keys:
+        if key in skeleton:
+            ordered_skeleton[key] = skeleton[key]
+
+    return ordered_skeleton
+
+
 def make_skeleton(
     config: dict[str, Any],
     filename: str,
@@ -39,6 +61,7 @@ def make_skeleton(
         with open(filename, 'r') as file:
             existing_vals = yaml.full_load(file)
     existing_vals.update(structure)
+    existing_vals = reoarder_skeleton(existing_vals)
 
     # TODO: Reuse file open for reading by resetting cursor and overwriting
     with open(filename, 'w') as file:

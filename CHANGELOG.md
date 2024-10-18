@@ -1,3 +1,7 @@
+# 1.2
+- Enforce better ordering of skeleton keys
+- Allow scenarios to be built from skeleton without any initial onchange entry
+
 # 1.1
 - Add installation procedure and FAQ in the readme
 - The surrounding tag in the data file is configurable
