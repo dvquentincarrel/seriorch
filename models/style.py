@@ -97,6 +97,6 @@ class Style(record.Record):
         style = self.style.replace("'", "''")
         cursor.execute(f"""
             UPDATE ir_ui_css_ionic
-            SET stylr = '{style}'
+            SET style = '{style}'
             WHERE name = '{self.name}'
         """)
