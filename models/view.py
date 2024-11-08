@@ -189,4 +189,8 @@ class View(record.Record):
 
         content = ''.join(lines)
 
-        return RE_ARCH.findall(content)[0].strip()
+        re_res = RE_ARCH.findall(content)
+        if not re_res:
+            raise ValueError(f"La vue {node.getparent().get('id')} semble ne pas avoir de tags <data> autour de son contenu")
+
+        return re_res[0].strip()
