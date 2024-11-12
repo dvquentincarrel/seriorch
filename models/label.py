@@ -1,5 +1,6 @@
 from . import param
 from typing import Any, TYPE_CHECKING
+import json
 
 class Label(param.Param):
     if TYPE_CHECKING:
@@ -20,15 +21,20 @@ class Label(param.Param):
         """
         return super().to_xml(prefix).replace('ir.ui.menu.ionic.param', 'ir.ui.menu.ionic.label')
 
-    def inject(self, cursor: Any) -> None:
+    def inject(self, cursor: Any, v10_port=5416) -> None:
         """Injects label's value in the DB. Does not commit
         TODO: Filter on xml id. It would overwrite ALL labels with this name
 
         :param cursor: Database cursor
         """
         value = self.value.replace("'", "''")
+        if cursor.connection.info.port == v10_port:
+            value = f"""jsonb_set(value, '{{en_US}}', '{json.dumps(value)}', false)"""
+        else:
+            value = f"'{value}'"
+
         cursor.execute(f"""
             UPDATE ir_ui_menu_ionic_label
-            SET value = '{value}'
+            SET value = {value}
             WHERE name = '{self.name}'
         """)
