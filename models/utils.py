@@ -1,4 +1,5 @@
 import os
+from time import sleep
 from typing import Any
 from psycopg2.extensions import connection
 import yaml
@@ -76,8 +77,13 @@ def rebuild_models(
     :param filename: Path to skeleton file
     :return: Tuple of the records
     """
-    with open(filename, 'r') as file:
-        data = yaml.full_load(file)
+    try:
+        with open(filename, 'r') as file:
+            data = yaml.full_load(file)
+    except FileNotFoundError:
+        sleep(0.2)
+        with open(filename, 'r') as file:
+            data = yaml.full_load(file)
 
     scen = Scenario.from_dict(data)
 

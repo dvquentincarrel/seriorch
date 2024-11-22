@@ -8,10 +8,12 @@ parser = argparse.ArgumentParser(
     prog="serior"
 )
 parser.add_argument('-v', '--version', action='version', version='seriorch 1.2')
+parser.add_argument('-w', '--watch', action='store_true', help="Pour build et inject, refait l'action à chaque sauvegarde d'un fichier")
 subparsers = parser.add_subparsers(dest="command", title="Commandes", help="commandes")
 
 init_parser = subparsers.add_parser('init', help="Initialise un projet")
 config_parser = subparsers.add_parser('config', help="Ouvre le fichier de config")
+
 build_parser = subparsers.add_parser('build', help="Compose un fichier de data à partir de ses composants")
 inject_parser = subparsers.add_parser('inject', help="Injecte les composants dans la base de données")
 
@@ -20,6 +22,7 @@ unravel_parser.add_argument('fichier', help="Fichier de data à décomposer")
 
 update_parser = subparsers.add_parser('update', help=B(BRD("NIY: Met à jour un fichier de data avec les composants")))
 update_parser.add_argument('fichier', help="Fichier de data à mettre à jour")
+
 
 def parse_args(config: dict) -> argparse.Namespace:
     args = parser.parse_args()

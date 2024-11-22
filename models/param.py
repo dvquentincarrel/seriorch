@@ -89,4 +89,5 @@ class Param(record.Record):
             UPDATE ir_ui_menu_ionic_param
             SET value = '{value}'
             WHERE name = '{self.name}'
+                AND is_synchronized <> false
         """)

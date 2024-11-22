@@ -1,3 +1,10 @@
+# 1.3
+- Add use of the watch config key / cli flag to automatically rerun build / inject
+- Allow injection of labels in v10
+- Improve error handling
+- Fix typo in CSS injection
+- Allow the use of scenarios with initial onchanges
+
 # 1.2
 - Enforce better ordering of skeleton keys
 - Allow scenarios to be built from skeleton without any initial onchange entry
