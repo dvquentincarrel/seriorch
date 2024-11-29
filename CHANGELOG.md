@@ -1,3 +1,10 @@
+# 1.4
+- Config can be overridden by the skeleton
+- Location symlink is now ignored by git
+- Added ruff config
+- Watched commands are silent in the background
+- Check db key is filled before injection
+
 # 1.3
 - Add use of the watch config key / cli flag to automatically rerun build / inject
 - Allow injection of labels in v10

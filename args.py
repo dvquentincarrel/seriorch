@@ -7,7 +7,7 @@ parser = argparse.ArgumentParser(
     description="Découpe et assemble des fichiers de data pour les web scanners",
     prog="serior"
 )
-parser.add_argument('-v', '--version', action='version', version='seriorch 1.2')
+parser.add_argument('-v', '--version', action='version', version='seriorch 1.4')
 parser.add_argument('-w', '--watch', action='store_true', help="Pour build et inject, refait l'action à chaque sauvegarde d'un fichier")
 subparsers = parser.add_subparsers(dest="command", title="Commandes", help="commandes")
 

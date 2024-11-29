@@ -16,7 +16,7 @@ def init(config: Any) -> None:
     os.symlink(os.path.expanduser(config['default_destination']), 'location')
     subprocess.run(['git','init'])
     with open('.gitignore', 'w') as file:
-        file.write(config['build_name'])
+        file.write(f"{config['build_name']}\nruff.toml\nlocation")
 
     with open('ruff.toml', 'w') as file:
         file.write(f"builtins = {config.get('builtins')}\n")
