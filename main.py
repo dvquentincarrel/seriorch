@@ -16,9 +16,7 @@ except OSError:
 project_dir = os.path.dirname(real_path)
 
 def ensure_config_exists() -> str:
-    """Makes sure config is setup and returns its path
-    """
-    """Sets up config file"""
+    """Makes sure config is setup and returns its path"""
     config_dir = os.environ.get('XDG_CONFIG_HOME', os.path.expanduser('~/.local/config'))
     if not os.path.exists(f"{config_dir}/seriorch"):
         os.makedirs(f"{config_dir}/seriorch")
@@ -37,5 +35,12 @@ with open(f"{project_dir}/data/skeleton_template.yaml", 'r') as file:
 
 with open(config['config_file'], 'r') as file:
     config.update(yaml.full_load(file))
+
+# Allows project-specific config items to be defined in the skeleton
+if os.path.exists('skeleton.yaml'):
+    with open('skeleton.yaml', 'r') as file:
+        skeleton_content = yaml.full_load(file)
+        if 'config' in skeleton_content:
+            config.update(skeleton_content['config'])
 
 args.parse_args(config)

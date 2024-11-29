@@ -30,5 +30,9 @@ Il ne faut pas utiliser la clef `init_oc`, mais `quirky_init_oc` dans ce cas
 ## Comment utiliser les xpath ? Quelle est la clef d'une vue où on renseigne la vue sur laquelle appliquer les xpaths ?
 La clef est `inherit`
 
+## Je suis à cheval entre deux versions et je dois constamment changer le fichier de config ! ALED !
+Le fichier `skeleton.yaml` peut prendre une clef `config`, mappée à un dictionnaire qui permet
+de redéfinir des options de la config
+
 # Le nom
 ScEnaRIO ORCHestrator. Voilà.
