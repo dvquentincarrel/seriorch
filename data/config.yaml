@@ -7,3 +7,25 @@ build_name: data.xml # Nom du fichier de build en local
 default_destination: /etc/v10/openprod10/openprod-addons/web_scanner/data # Emplacement de destination par défaut
 unravel_commit: true # Commit après un unraveling
 watch: false # Build / inject automatically
+builtins: # For Ruff. List of symbols that are used but come from elsewhere
+  - caller
+  - result
+  - object
+  - self
+  - global_labels
+  - global_params
+  - enclose
+  - datetime
+  - time
+  - pytz
+  - relativedelta
+  - re
+  - json
+  - float_compare
+  - _
+  - pdb
+  - breakpoint
+  - logger
+  - AttrDict
+  - AbortExec
+  - __builtins__

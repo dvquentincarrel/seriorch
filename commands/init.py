@@ -18,5 +18,8 @@ def init(config: Any) -> None:
     with open('.gitignore', 'w') as file:
         file.write(config['build_name'])
 
+    with open('ruff.toml', 'w') as file:
+        file.write(f"builtins = {config.get('builtins')}\n")
+
     subprocess.run(['git','add', '.'])
     subprocess.run(['git','commit', '-m', 'init'])
