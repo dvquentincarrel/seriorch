@@ -16,6 +16,7 @@ config_parser = subparsers.add_parser('config', help="Ouvre le fichier de config
 
 build_parser = subparsers.add_parser('build', help="Compose un fichier de data à partir de ses composants")
 inject_parser = subparsers.add_parser('inject', help="Injecte les composants dans la base de données")
+lint_parser = subparsers.add_parser('lint', help="Lint les fichiers python et xml")
 
 unravel_parser = subparsers.add_parser('unravel', help="Décompose un fichier de data en ses composants")
 unravel_parser.add_argument('fichier', help="Fichier de data à décomposer")

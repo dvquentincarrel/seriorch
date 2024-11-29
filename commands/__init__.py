@@ -6,6 +6,7 @@ from . import config as cfg
 from . import inject
 from . import unravel
 from . import watch
+from . import lint
 def do(command: str, config: dict, args: Any):
     """Execute the given command
 
@@ -29,5 +30,7 @@ def do(command: str, config: dict, args: Any):
             wrapper(build.build, config)(config)
         case 'inject':
             wrapper(inject.inject, config)(config)
+        case 'lint':
+            lint.lint()
         case 'update':
             raise NotImplementedError
