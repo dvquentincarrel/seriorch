@@ -126,5 +126,7 @@ def get_db_cursor(config: dict[str, Any]) -> pcg.extensions.cursor:
 
     if 'db' not in data:
         raise ValueError("Le squelette n'a pas d'entrée \"db\", qui doit contenir le nom de la bdd.")
+    elif not data['db']:
+        raise ValueError("La clef \"db\" du squelette est vide")
 
     return pcg.connect(database=data['db'], user=config['db_user'], password=config['db_pw'], port=config['db_port']).cursor()
