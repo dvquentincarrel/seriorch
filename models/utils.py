@@ -129,4 +129,4 @@ def get_db_cursor(config: dict[str, Any]) -> pcg.extensions.cursor:
     elif not data['db']:
         raise ValueError("La clef \"db\" du squelette est vide")
 
-    return pcg.connect(database=data['db'], user=config['db_user'], password=config['db_pw'], port=config['db_port']).cursor()
+    return pcg.connect(database=data['db'], user=config['db_user'], password=config['db_pw'], port=config['db_port'], host='localhost').cursor()
