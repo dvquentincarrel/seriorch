@@ -163,7 +163,8 @@ class View(record.Record):
         arch = self.arch.replace("'", "''")
         cursor.execute(f"""
             UPDATE ir_ui_view_ionic
-            SET {'raw_' if self.raw else ''}architecture = '{arch}'
+            SET {'raw_' if self.raw else ''}architecture = '{arch}',
+                is_translatable_architecture = '{bool(self.translatable)}'
             WHERE identifier = '{self.identifier}'
         """)
 

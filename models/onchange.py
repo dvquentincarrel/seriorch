@@ -145,6 +145,7 @@ class Onchange(record.Record):
         code = self.code.replace("'", "''")
         cursor.execute(f"""
             UPDATE manual_onchange
-            SET {'raw_' if self.raw else ''}code = '{code}'
+            SET {'raw_' if self.raw else ''}code = '{code}',
+                is_translatable_code = '{bool(self.translatable)}'
             WHERE name = '{self.name}'
         """)
